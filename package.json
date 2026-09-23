@@ -1,0 +1,20 @@
+{
+  "name": "doha-fresh-mart",
+  "version": "1.0.0",
+  "description": "Online general store for Doha, Qatar — fresh vegetables, fruits and daily household essentials",
+  "main": "src/server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test test/*.test.js",
+    "reset-db": "node src/scripts/reset-db.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}

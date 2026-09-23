@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Doha Fresh Mart</title>
+  <meta name="description" content="Fresh vegetables, fruits and daily household essentials delivered across Doha, Qatar.">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="#/" class="brand">
+        <span class="brand-mark" aria-hidden="true">🧺</span>
+        <span class="brand-name" data-i18n="storeName">Doha Fresh Mart</span>
+      </a>
+      <form class="search" role="search" id="search-form">
+        <input type="search" id="search" autocomplete="off" data-i18n-placeholder="searchPlaceholder" aria-label="Search">
+      </form>
+      <nav class="topbar-actions">
+        <a href="#/track" class="link-btn" data-i18n="trackOrder">Track order</a>
+        <button type="button" class="link-btn" id="lang-toggle" aria-label="Switch language">عربي</button>
+        <button type="button" class="cart-btn" id="cart-open">
+          <span aria-hidden="true">🛒</span>
+          <span data-i18n="basket">Basket</span>
+          <span class="badge" id="cart-count">0</span>
+        </button>
+      </nav>
+    </div>
+    <div class="banner" id="banner"></div>
+  </header>
+
+  <main id="view" class="container" tabindex="-1"></main>
+
+  <aside class="drawer" id="cart-drawer" aria-hidden="true">
+    <div class="drawer-backdrop" data-close></div>
+    <div class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="cart-title">
+      <div class="drawer-head">
+        <h2 id="cart-title" data-i18n="yourBasket">Your basket</h2>
+        <button type="button" class="icon-btn" data-close aria-label="Close">✕</button>
+      </div>
+      <div class="drawer-body" id="cart-body"></div>
+      <div class="drawer-foot" id="cart-foot"></div>
+    </div>
+  </aside>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <footer class="footer">
+    <p data-i18n="footer">Delivering fresh groceries across Doha, 7 am – 11 pm, every day.</p>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>

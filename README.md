@@ -58,6 +58,41 @@ If you don't set `ADMIN_TOKEN`, the server makes up a temporary one and prints i
 
 Data is stored in a JSON file, which is filled with the starting catalogue on first run. Run `npm run reset-db` to go back to the starting catalogue.
 
+## Deploy to AWS
+
+### Option A — Elastic Beanstalk (recommended, no Docker needed)
+
+1. Build the upload file: `npm run package:aws` → `dist/doha-fresh-mart-eb.zip`
+2. AWS Console → **Elastic Beanstalk** → **Create application**
+   - Platform: **Node.js** (Node.js 20 or 22 on Amazon Linux 2023)
+   - Application code: **Upload your code** → choose `doha-fresh-mart-eb.zip`
+   - Presets: **Single instance (free tier eligible)**
+3. Under **Configure updates, monitoring, and logging → Environment properties**, add
+   `ADMIN_TOKEN` = a long secret of your choice (this is the admin password).
+4. Create the environment and wait until it turns green (about 5 minutes), then open the environment URL.
+   The admin panel is at `<your-url>/admin`.
+
+The bundle does the following for you:
+- `.ebextensions/01-app.config` runs the app on a single instance and stores data in `/var/app/data/db.json`, so orders are kept when you redeploy
+- `.platform/hooks` creates that data folder
+- `Procfile` starts the server
+
+To update the live site, run `npm run package:aws` again and use **Upload and deploy** on the environment.
+
+> Data lives on the one EC2 instance. If AWS replaces or terminates the instance, the data is lost.
+> Before real trading, move to a managed database such as Amazon RDS or DynamoDB.
+> Add HTTPS by putting a custom domain in front of the site, for example with CloudFront or a load balancer that has an ACM certificate.
+
+### Option B — Docker (App Runner / ECS)
+
+```bash
+docker build -t doha-fresh-mart .
+docker run -p 8080:8080 -e ADMIN_TOKEN=secret doha-fresh-mart
+```
+
+Push the image to Amazon ECR, then create an **App Runner** service from it (port `8080`, env var `ADMIN_TOKEN`).
+App Runner does not keep files on disk between restarts, so use this option once the app is on a real database.
+
 ## Tests
 
 ```bash
